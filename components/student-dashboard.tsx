@@ -13,6 +13,7 @@ import { useAuth } from "@/lib/auth-context"
 import AptitudeTest from "@/components/aptitude-test"
 import ResumeAnalyzer from "@/components/resume-analyzer"
 import { SoftSkillsTest } from "@/components/soft-skills-test"
+import RoadmapFeature from "@/components/roadmap-feature"
 
 interface StudentData {
   id: string
@@ -23,6 +24,7 @@ interface StudentData {
   aptitude_score: number
   soft_skills_score: number
   interview_score: number
+  interests: string
   progress_data: Array<{
     week: string
     date: string
@@ -139,13 +141,16 @@ export default function StudentDashboard() {
 
       <div className="container mx-auto px-4 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-5">
+          {/* --- MODIFICATION HERE --- */}
+          <TabsList className="grid w-full grid-cols-6"> {/* Changed from 5 to 6 */}
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="resume">Resume</TabsTrigger>
             <TabsTrigger value="aptitude">Aptitude</TabsTrigger>
             <TabsTrigger value="skills">Soft Skills</TabsTrigger>
+            <TabsTrigger value="interview">Interview</TabsTrigger> {/* Added this tab */}
             <TabsTrigger value="roadmap">Roadmap</TabsTrigger>
           </TabsList>
+          {/* --- END MODIFICATION --- */}
 
           <TabsContent value="overview" className="space-y-6">
             {/* Score Cards */}
@@ -282,47 +287,26 @@ export default function StudentDashboard() {
           <TabsContent value="skills">
             <SoftSkillsTest studentId={student.id} onComplete={fetchStudentData} />
           </TabsContent>
-
-          <TabsContent value="roadmap">
+          
+          {/* --- NEWLY ADDED CONTENT --- */}
+          <TabsContent value="interview">
             <Card>
               <CardHeader>
-                <CardTitle>3-Week Improvement Roadmap</CardTitle>
-                <CardDescription>Personalized plan based on your current performance</CardDescription>
+                <CardTitle>Interview Preparation</CardTitle>
+                <CardDescription>Resources and tools to help you ace your interviews.</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="border-l-4 border-primary pl-4">
-                    <h4 className="font-semibold text-foreground">Week 1: Resume Enhancement</h4>
-                    <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                      <li>• Add 2 technical projects with detailed descriptions</li>
-                      <li>• Quantify achievements with numbers and metrics</li>
-                      <li>• Improve formatting and visual appeal</li>
-                      <li>• Get feedback from career services</li>
-                    </ul>
-                  </div>
-
-                  <div className="border-l-4 border-chart-2 pl-4">
-                    <h4 className="font-semibold text-foreground">Week 2: Aptitude Practice</h4>
-                    <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                      <li>• Practice 50 quantitative problems daily</li>
-                      <li>• Focus on time management techniques</li>
-                      <li>• Take 3 mock aptitude tests</li>
-                      <li>• Review weak areas identified in tests</li>
-                    </ul>
-                  </div>
-
-                  <div className="border-l-4 border-chart-3 pl-4">
-                    <h4 className="font-semibold text-foreground">Week 3: Soft Skills & Interview Prep</h4>
-                    <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                      <li>• Practice elevator pitch and self-introduction</li>
-                      <li>• Prepare STAR method examples for behavioral questions</li>
-                      <li>• Attend communication workshop</li>
-                      <li>• Take mock interviews with feedback</li>
-                    </ul>
-                  </div>
-                </div>
+              <CardContent className="space-y-4">
+                <p>This section will contain mock interview tools, common questions, and feedback on your interview performance.</p>
+                <Button>Start Mock Interview</Button>
               </CardContent>
             </Card>
+          </TabsContent>
+          {/* --- END NEW CONTENT --- */}
+
+         {/* --- 3. UPDATED HERE --- */}
+          <TabsContent value="roadmap">
+            {/* We pass the student's interest string to the component */}
+            <RoadmapFeature studentInterests={student.interests}/>
           </TabsContent>
         </Tabs>
       </div>

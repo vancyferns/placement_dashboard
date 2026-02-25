@@ -1,3 +1,4 @@
+// components/student-dashboard.tsx
 "use client"
 
 import { useState, useEffect } from "react"
@@ -14,6 +15,7 @@ import AptitudeTest from "@/components/aptitude-test"
 import ResumeAnalyzer from "@/components/resume-analyzer"
 import { SoftSkillsTest } from "@/components/soft-skills-test"
 import RoadmapFeature from "@/components/roadmap-feature"
+import MockInterview from "@/components/mock-interview" // <-- 1. IMPORT IT HERE
 
 interface StudentData {
   id: string
@@ -288,22 +290,12 @@ export default function StudentDashboard() {
             <SoftSkillsTest studentId={student.id} onComplete={fetchStudentData} />
           </TabsContent>
           
-          {/* --- NEWLY ADDED CONTENT --- */}
+          {/* --- 2. REPLACED THE CONTENT OF THE INTERVIEW TAB --- */}
           <TabsContent value="interview">
-            <Card>
-              <CardHeader>
-                <CardTitle>Interview Preparation</CardTitle>
-                <CardDescription>Resources and tools to help you ace your interviews.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p>This section will contain mock interview tools, common questions, and feedback on your interview performance.</p>
-                <Button>Start Mock Interview</Button>
-              </CardContent>
-            </Card>
+            <MockInterview />
           </TabsContent>
-          {/* --- END NEW CONTENT --- */}
+          {/* --- END OF MODIFICATION --- */}
 
-         {/* --- 3. UPDATED HERE --- */}
           <TabsContent value="roadmap">
             {/* We pass the student's interest string to the component */}
             <RoadmapFeature studentInterests={student.interests}/>
